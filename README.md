@@ -2,7 +2,7 @@
 
 Fraud Guard AI is a full-stack, bank-grade anomaly detection and financial crime investigation platform. It seamlessly merges deterministic FATF/KYC regulatory logic with probabilistic machine learning models to classify real-time transactional risks globally.
 
-## 🚀 Architectural Workflow
+##  Architectural Workflow
 
 Our platform operates on a completely decoupled microservice topology:
 
@@ -24,7 +24,7 @@ The exact transaction matrix is piped sequentially through a massive Cognitive E
 
 ---
 
-## 💻 Tech Stack
+##  Tech Stack
 
 - **Frontend:** React, Vite, Recharts, `react-force-graph-2d`, Lucide Icons
 - **Backend:** Python, FastAPI, Uvicorn, SQLAlchemy (SQLite physical engine)

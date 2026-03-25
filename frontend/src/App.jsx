@@ -29,15 +29,51 @@ const getScoreColor = (score) => {
 function LandingPage() {
   const navigate = useNavigate();
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)' }}>
-      <ShieldCheck size={80} color="var(--accent)" style={{ marginBottom: '24px' }} />
-      <h1 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: '700', marginBottom: '16px', color: 'var(--text-primary)', textAlign:'center' }}>Fraud Guard AI</h1>
-      <p style={{ fontSize: 'clamp(14px, 3vw, 18px)', color: 'var(--text-secondary)', marginBottom: '40px', maxWidth: '600px', textAlign: 'center', padding: '0 20px' }}>
-        The Next-Generation AI-powered Fraud Detection & Financial Crime Investigation System for Enterprise Banking.
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 40%, #0f172a 100%)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
+      {/* Animated background particles */}
+      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+        {[...Array(6)].map((_, i) => (
+          <div key={i} style={{ position: 'absolute', width: `${200 + i * 80}px`, height: `${200 + i * 80}px`, borderRadius: '50%', border: '1px solid rgba(37,99,235,0.08)', left: `${10 + i * 12}%`, top: `${5 + i * 10}%`, animation: `pulse ${3 + i}s ease-in-out infinite alternate` }} />
+        ))}
+      </div>
+
+      {/* 3D Floating Shield */}
+      <div style={{ position: 'relative', marginBottom: '40px', animation: 'float 4s ease-in-out infinite' }}>
+        <div style={{ width: '160px', height: '160px', background: 'linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #60a5fa 100%)', borderRadius: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 80px rgba(37,99,235,0.4), 0 0 160px rgba(37,99,235,0.15), 0 25px 50px rgba(0,0,0,0.3)', transform: 'perspective(800px) rotateY(-8deg) rotateX(5deg)' }}>
+          <ShieldCheck size={80} color="white" strokeWidth={1.5} />
+        </div>
+        <div style={{ position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%)', width: '120px', height: '20px', background: 'radial-gradient(ellipse, rgba(37,99,235,0.3), transparent)', borderRadius: '50%' }} />
+      </div>
+
+      {/* Title */}
+      <h1 style={{ fontSize: 'clamp(36px, 6vw, 64px)', fontWeight: '800', color: '#ffffff', textAlign: 'center', marginBottom: '16px', letterSpacing: '-1px' }}>
+        Fraud Guard <span style={{ background: 'linear-gradient(90deg, #3b82f6, #60a5fa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>AI</span>
+      </h1>
+      <p style={{ fontSize: 'clamp(15px, 2.5vw, 20px)', color: '#94a3b8', maxWidth: '600px', textAlign: 'center', padding: '0 24px', lineHeight: '1.7', marginBottom: '48px' }}>
+        Next-generation cognitive fraud detection & financial crime investigation platform powered by multi-agent AI swarm intelligence.
       </p>
-      <button className="btn-primary" style={{ fontSize: '18px', padding: '16px 32px' }} onClick={() => navigate('/app/dashboard')}>
-        Get Started <ChevronRight />
-      </button>
+
+      {/* CTA Buttons */}
+      <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <button onClick={() => navigate('/app/dashboard')} style={{ padding: '16px 40px', fontSize: '16px', fontWeight: '700', background: 'linear-gradient(135deg, #2563eb, #3b82f6)', color: '#fff', border: 'none', borderRadius: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 0 30px rgba(37,99,235,0.4), 0 8px 24px rgba(0,0,0,0.2)', transition: 'all 0.3s ease', letterSpacing: '0.5px' }}>
+          Launch Dashboard <ChevronRight size={20} />
+        </button>
+      </div>
+
+      {/* Stats bar */}
+      <div style={{ display: 'flex', gap: 'clamp(24px, 5vw, 64px)', marginTop: '80px', flexWrap: 'wrap', justifyContent: 'center' }}>
+        {[{ val: '65,000+', label: 'Transactions Monitored' }, { val: '99.8%', label: 'Detection Accuracy' }, { val: '<50ms', label: 'Response Time' }, { val: '6', label: 'AI Agents Active' }].map(s => (
+          <div key={s.label} style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: '800', color: '#ffffff' }}>{s.val}</div>
+            <div style={{ fontSize: '13px', color: '#64748b', marginTop: '4px' }}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      <style>{`
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-16px); } }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.3; } 100% { transform: scale(1.1); opacity: 0.1; } }
+      `}</style>
     </div>
   );
 }
