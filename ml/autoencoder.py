@@ -30,7 +30,7 @@ def get_score(transaction) -> float:
     loc_len = len(getattr(transaction, "location", transaction.get("location", "") if isinstance(transaction, dict) else "")) / 20.0
     
     # Provide synthetic inputs
-    tensor_input = torch.tensor([float(val1), float(val2)], dtype=torch.float32)
+    tensor_input = torch.tensor([float(amount), float(loc_len)], dtype=torch.float32)
     with torch.no_grad():
         output = model(tensor_input)
         error = torch.nn.functional.mse_loss(output, tensor_input).item()
