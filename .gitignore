@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+venv/
+env/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+frontend/npm-debug.log*
+
+# Database (Optional: If you want to push the 16MB fraud.db, remove this. I will leave it out to keep the repo fast)
+# fraud.db
+# sql_app.db
+
+# OS
+.DS_Store
+Thumbs.db
