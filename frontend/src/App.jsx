@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
   ShieldCheck, AlertTriangle, AlertCircle, Activity, Search, RefreshCw, XCircle, 
@@ -60,7 +60,7 @@ function LandingPage() {
         </button>
       </div>
 
-      {/* Stats bar — Glassmorphism */}
+      {/* Stats bar ΓÇö Glassmorphism */}
       <div style={{ position: 'relative', zIndex: 1, display: 'flex', gap: 'clamp(16px, 4vw, 48px)', marginTop: '48px', flexWrap: 'wrap', justifyContent: 'center', background: 'rgba(255,255,255,0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.7)', borderRadius: '20px', padding: '24px clamp(24px, 4vw, 48px)', boxShadow: '0 4px 24px rgba(31,38,135,0.06)' }}>
         {[{ val: '65,000+', label: 'Transactions Monitored', color: '#2563eb' }, { val: '99.8%', label: 'Detection Accuracy', color: '#7c3aed' }, { val: '<50ms', label: 'Response Time', color: '#0ea5e9' }, { val: '6', label: 'AI Agents Active', color: '#22c55e' }].map(s => (
           <div key={s.label} style={{ textAlign: 'center', minWidth: '100px' }}>
@@ -132,38 +132,29 @@ function Sidebar({ isOpen, setOpen }) {
 
 function Header({ simulateAlert, toggleMenu }) {
   const [time, setTime] = useState(new Date().toLocaleTimeString());
-  const [isSimulating, setIsSimulating] = useState(false);
-  
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date().toLocaleTimeString()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const handleSimulate = async () => {
-    setIsSimulating(true);
-    await simulateAlert();
-    setIsSimulating(false);
-  };
-
   return (
     <div className="header-container">
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <button className="mobile-nav-toggle" onClick={toggleMenu}><Menu size={24} /></button>
-        <h1 style={{ fontSize: '18px', fontWeight: '700', display: 'none', color: 'var(--text-primary)' }} className="header-title">Cognitive Intelligence</h1>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', fontWeight: '800', color: 'var(--risk-low)', background: 'rgba(34,197,94,0.08)', padding: '6px 14px', borderRadius: '100px', border: '1px solid rgba(34,197,94,0.15)', marginLeft: '20px' }}>
-          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--risk-low)', boxShadow: '0 0 8px var(--risk-low)' }}></div> LIVE TELEMETRY
+        <h1 style={{ fontSize: '18px', fontWeight: '600', display: 'none', '@media(min-width: 640px)': {display: 'block'} }} className="header-title">Transaction Intelligence</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', fontWeight: '600', color: 'var(--risk-low)', background: 'var(--risk-low-bg)', padding: '4px 10px', borderRadius: '999px', border: '1px solid rgba(34,197,94,0.2)', marginLeft: '16px' }}>
+          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--risk-low)' }}></div> LIVE
         </div>
       </div>
       <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-        <div style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: '500', display: 'flex', alignItems: 'center', gap: '8px', marginRight: '24px' }} className="hide-on-mobile">
-          <Globe size={14} color="var(--accent)" /> {time} UTC
+        <div style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: '500', display: 'flex', alignItems: 'center', gap: '8px', marginRight: '16px' }} className="hide-on-mobile">
+          <Globe size={14} /> {time} UTC
         </div>
         <button className="btn-secondary" onClick={() => window.open(`${API_URL}/report/export`, '_blank')}>
-          <FileText size={16} /> Export
+          <FileText size={16} /> Export CSV
         </button>
-        <button className="btn-primary" onClick={handleSimulate} disabled={isSimulating}>
-          {isSimulating ? <RefreshCw size={16} className="animate-spin" /> : <Play size={16} />}
-          {isSimulating ? 'Simulating...' : 'Simulate'}
+        <button className="btn-primary" onClick={simulateAlert}>
+          <Play size={16} /> Simulate
         </button>
       </div>
     </div>
@@ -288,12 +279,12 @@ function Dashboard({ transactions, kpi, stats, selectedTx, setSelectedTx }) {
                 </div>
               </div>
 
-              <div style={{ background: 'rgba(241,245,249,0.5)', padding: '16px', borderRadius: '16px', marginBottom: '24px', border: '1px solid var(--border-light)' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', fontSize: '13px' }}>
-                  <div><div style={{ color: 'var(--text-muted)', marginBottom: '2px', fontSize: '11px', fontWeight: '600', textTransform: 'uppercase' }}>Amount</div><div style={{ fontWeight: '600' }}>${selectedTx.amount.toLocaleString()}</div></div>
-                  <div><div style={{ color: 'var(--text-muted)', marginBottom: '2px', fontSize: '11px', fontWeight: '600', textTransform: 'uppercase' }}>Location</div><div style={{ fontWeight: '600' }}>{selectedTx.location}</div></div>
-                  <div><div style={{ color: 'var(--text-muted)', marginBottom: '2px', fontSize: '11px', fontWeight: '600', textTransform: 'uppercase' }}>Device</div><div style={{ fontWeight: '600' }}>{selectedTx.device}</div></div>
-                  <div><div style={{ color: 'var(--text-muted)', marginBottom: '2px', fontSize: '11px', fontWeight: '600', textTransform: 'uppercase' }}>User ID</div><div style={{ fontWeight: '600' }}>{selectedTx.user_id.split('-')[1]}</div></div>
+              <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '8px', marginBottom: '24px', border: '1px solid var(--border-light)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', fontSize: '13px' }}>
+                  <div><div style={{ color: 'var(--text-secondary)' }}>Amount</div><div style={{ fontWeight: '500' }}>${selectedTx.amount.toLocaleString()}</div></div>
+                  <div><div style={{ color: 'var(--text-secondary)' }}>Location</div><div style={{ fontWeight: '500' }}>{selectedTx.location}</div></div>
+                  <div><div style={{ color: 'var(--text-secondary)' }}>Device</div><div style={{ fontWeight: '500' }}>{selectedTx.device}</div></div>
+                  <div><div style={{ color: 'var(--text-secondary)' }}>User ID</div><div style={{ fontWeight: '500' }}>{selectedTx.user_id}</div></div>
                 </div>
               </div>
               <SequentialAgentFeed agentLogs={selectedTx.agent_logs} />
@@ -330,54 +321,26 @@ function TablePage({ title, description, endpoint, columns, renderRow }) {
 
 function EntityGraph() {
   const [data, setData] = useState({ nodes: [], links: [] });
-  const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
-  const containerRef = React.useRef();
-
-  useEffect(() => {
-    fetch(`${API_URL}/entities`).then(r => r.json()).then(setData).catch(console.error);
-    
-    if (containerRef.current) {
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (let entry of entries) {
-          setDimensions({
-            width: entry.contentRect.width,
-            height: entry.contentRect.height
-          });
-        }
-      });
-      resizeObserver.observe(containerRef.current);
-      return () => resizeObserver.disconnect();
-    }
-  }, []);
-
+  useEffect(() => { fetch(`${API_URL}/entities`).then(r => r.json()).then(setData).catch(console.error); }, []);
   return (
-    <div className="card fade-in" style={{ margin: 'clamp(16px, 3vw, 32px)', height: '70vh', minHeight: '500px', display: 'flex', flexDirection: 'column' }}>
-      <div style={{display:'flex', alignItems:'center', gap:'12px', marginBottom: '20px'}}>
-         <div style={{ background: 'var(--accent-light)', padding: '8px', borderRadius: '10px' }}>
-          <Share2 size={24} color="var(--accent)" />
-         </div>
-         <div>
-          <h2 style={{ fontSize: '20px', fontWeight: '700' }}>Relational Intelligence Graph</h2>
-          <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Multi-hop network analysis of user-location-risk vectors</p>
-         </div>
+    <div className="card fade-in" style={{ margin: 'clamp(16px, 3vw, 32px)', height: '800px', display: 'flex', flexDirection: 'column' }}>
+      <div style={{display:'flex', alignItems:'center', gap:'12px', marginBottom: '16px'}}>
+         <Share2 size={24} color="var(--accent)" />
+         <h2 style={{ fontSize: '20px', fontWeight: '600' }}>Live Entity Relationship Subgraph</h2>
       </div>
-      <div ref={containerRef} style={{ flex: 1, border: '1px solid var(--border-light)', borderRadius: '16px', position: 'relative', overflow: 'hidden', background: 'rgba(248,250,252,0.3)' }}>
+      <div style={{ flex: 1, border: '1px solid var(--border-light)', borderRadius: '8px', position: 'relative', overflow: 'hidden', background: '#fafafa' }}>
         {data.nodes && data.nodes.length > 0 ? (
           <ForceGraph2D
-            width={dimensions.width}
-            height={dimensions.height}
+            width={1200}
+            height={700}
             graphData={data}
             nodeLabel="label"
             nodeAutoColorBy="group"
             linkDirectionalParticles={2}
             linkDirectionalParticleSpeed={d => d.value * 0.001}
-            backgroundColor="rgba(0,0,0,0)"
           />
         ) : (
-          <div style={{height:'100%', display:'flex', alignItems:'center', justifyContent:'center', color:'var(--text-secondary)'}}>
-            <RefreshCw size={24} className="animate-spin" style={{marginRight: '12px'}} />
-            Generating Intelligence Clusters...
-          </div>
+          <div style={{height:'100%', display:'flex', alignItems:'center', justifyContent:'center', color:'var(--text-secondary)'}}>Generating Subgraph Links...</div>
         )}
       </div>
     </div>
