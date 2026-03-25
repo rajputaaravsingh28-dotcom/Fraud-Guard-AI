@@ -265,13 +265,14 @@ function Dashboard({ transactions, kpi, stats, selectedTx, setSelectedTx }) {
 
 // ---- NEW FUNCTIONAL PAGES ----
 
-function TablePage({ title, endpoint, columns, renderRow }) {
+function TablePage({ title, description, endpoint, columns, renderRow }) {
   const [data, setData] = useState([]);
   const fetchData = () => { fetch(`${API_URL}${endpoint}`).then(r => r.json()).then(setData).catch(console.error); };
   useEffect(() => { fetchData() }, [endpoint]);
   return (
     <div className="card fade-in" style={{ margin: 'clamp(16px, 3vw, 32px)' }}>
-       <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '24px' }}>{title}</h2>
+       <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: description ? '8px' : '24px' }}>{title}</h2>
+       {description && <p style={{ color: 'var(--text-secondary)', marginBottom: '24px', fontSize: '14px' }}>{description}</p>}
        <div style={{ overflowX: 'auto' }}>
          <table>
            <thead><tr>{columns.map(c => <th key={c}>{c}</th>)}</tr></thead>
@@ -432,7 +433,7 @@ function MainLayout() {
              <Route path="/dashboard" element={<Dashboard transactions={transactions} selectedTx={selectedTx} setSelectedTx={setSelectedTx} kpi={kpi} stats={stats} />} />
              <Route path="/entity-graph" element={<EntityGraph />} />
              <Route path="/rules" element={<AMLRules />} />
-             <Route path="/review" element={<TablePage title="Action Required: Under Review" endpoint="/review" columns={['Tx ID', 'User', 'Amount', 'Location', 'Risk', 'Actions']} renderRow={(tx, refresh) => (
+             <Route path="/review" element={<TablePage title="Action Required: Under Review" description="Transactions that triggered medium-to-high risk anomalies. Requires immediate manual analyst review to authorize Approval or definitive Block overrides." endpoint="/review" columns={['Tx ID', 'User', 'Amount', 'Location', 'Risk', 'Actions']} renderRow={(tx, refresh) => (
                <tr key={tx.id}>
                   <td style={{fontFamily:'monospace'}}>#{tx.id}</td><td>{tx.user_id}</td><td>${tx.amount.toLocaleString()}</td><td>{tx.location}</td><td><span className={`badge ${getBadgeStyle(tx.decision)}`}>{tx.decision}</span></td>
                   <td>
@@ -443,10 +444,10 @@ function MainLayout() {
                   </td>
                </tr>
              )}/>} />
-             <Route path="/resolved" element={<TablePage title="Successfully Resolved (Safe)" endpoint="/resolved" columns={['Tx ID', 'User', 'Amount', 'Location', 'Risk']} renderRow={(tx) => (
+             <Route path="/resolved" element={<TablePage title="Successfully Resolved (Safe)" description="Historical log of natively permitted connections securely matching low-risk models without flagged anomalies." endpoint="/resolved" columns={['Tx ID', 'User', 'Amount', 'Location', 'Risk']} renderRow={(tx) => (
                <tr key={tx.id}><td style={{fontFamily:'monospace'}}>#{tx.id}</td><td>{tx.user_id}</td><td>${tx.amount.toLocaleString()}</td><td>{tx.location}</td><td><span className={`badge ${getBadgeStyle(tx.decision)}`}>{tx.decision}</span></td></tr>
              )}/>} />
-             <Route path="/cases" element={<TablePage title="Intelligent Case Reports" endpoint="/cases" columns={['Case ID', 'Tx Ref', 'Status', 'AI Notes', 'Created At', 'Action']} renderRow={(c, refresh) => (
+             <Route path="/cases" element={<TablePage title="Intelligent Case Reports" description="High-priority escalations automatically spawned by the AI Pipeline in response to severe structural matrix violations." endpoint="/cases" columns={['Case ID', 'Tx Ref', 'Status', 'AI Notes', 'Created At', 'Action']} renderRow={(c, refresh) => (
                <tr key={c.id}>
                   <td>#{c.id}</td><td>Tx #{c.transaction_id}</td><td><span className={c.status === 'CLOSED' ? "badge badge-low" : "badge badge-high"}>{c.status}</span></td><td>{c.notes}</td><td style={{color:'var(--text-secondary)'}}>{new Date(c.created_at).toLocaleString()}</td>
                   <td>
